@@ -68,6 +68,7 @@ from neutronclient.neutron.v2_0.vpn import ikepolicy
 from neutronclient.neutron.v2_0.vpn import ipsec_site_connection
 from neutronclient.neutron.v2_0.vpn import ipsecpolicy
 from neutronclient.neutron.v2_0.vpn import vpnservice
+from neutronclient.neutron.v2_0 import eayun_qos
 from neutronclient.openstack.common.gettextutils import _
 from neutronclient.openstack.common import strutils
 from neutronclient.version import __version__
@@ -295,6 +296,23 @@ COMMAND_V2 = {
     'nec-packet-filter-create': packetfilter.CreatePacketFilter,
     'nec-packet-filter-update': packetfilter.UpdatePacketFilter,
     'nec-packet-filter-delete': packetfilter.DeletePacketFilter,
+    'eayun-qos-list': eayun_qos.ListQos,
+    'eayun-qos-show': eayun_qos.ShowQos,
+    'eayun-qos-create': eayun_qos.CreateQos,
+    'eayun-qos-update': eayun_qos.UpdateQos,
+    'eayun-qos-delete': eayun_qos.DeleteQos,
+    'eayun-qos-unbind': eayun_qos.UnbindQos,
+    'eayun-qos-queue-list': eayun_qos.ListQosQueue,
+    'eayun-qos-queue-show': eayun_qos.ShowQosQueue,
+    'eayun-qos-queue-create': eayun_qos.CreateQosQueue,
+    'eayun-qos-queue-update': eayun_qos.UpdateQosQueue,
+    'eayun-qos-queue-delete': eayun_qos.DeleteQosQueue,
+    'eayun-qos-filter-list': eayun_qos.ListQosFilter,
+    'eayun-qos-filter-show': eayun_qos.ShowQosFilter,
+    'eayun-qos-filter-create': eayun_qos.CreateQosFilter,
+    'eayun-qos-filter-update': eayun_qos.UpdateQosFilter,
+    'eayun-qos-filter-delete': eayun_qos.DeleteQosFilter,
+    'eayun-qos-filter-unattach': eayun_qos.UnattachQosFilter,
 }
 
 COMMANDS = {'2.0': COMMAND_V2}
