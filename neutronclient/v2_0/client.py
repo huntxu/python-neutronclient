@@ -226,6 +226,12 @@ class Client(object):
     firewall_path = "/fw/firewalls/%s"
     net_partitions_path = "/net-partitions"
     net_partition_path = "/net-partitions/%s"
+    eayun_qos_qoss_path = '/eayun_qos/qoss'
+    eayun_qos_qos_path = '/eayun_qos/qoss/%s'
+    eayun_qos_qos_queues_path = '/eayun_qos/qos-queues'
+    eayun_qos_qos_queue_path = '/eayun_qos/qos-queues/%s'
+    eayun_qos_qos_filters_path = '/eayun_qos/qos-filters'
+    eayun_qos_qos_filter_path = '/eayun_qos/qos-filters/%s'
 
     # API has no way to report plurals, so we have to hard code them
     EXTED_PLURALS = {'routers': 'router',
@@ -251,6 +257,9 @@ class Client(object):
                      'metering_label_rules': 'metering_label_rule',
                      'net_partitions': 'net_partition',
                      'packet_filters': 'packet_filter',
+                     'qoss': 'qos',
+                     'qos_queues': 'qos_queue',
+                     'qos_filters': 'qos_filter',
                      }
     # 8192 Is the default max URI len for eventlet.wsgi.server
     MAX_URI_LEN = 8192
@@ -1190,6 +1199,90 @@ class Client(object):
     def delete_packet_filter(self, packet_filter_id):
         """Delete the specified packet filter."""
         return self.delete(self.packet_filter_path % packet_filter_id)
+
+    @APIParamsCall
+    def list_eayun_qoss(self, retrieve_all=True, **_params):
+        """Fetches a list of all eayun qoss for a tenant."""
+        # Pass filters in "params" argument to do_request
+        return self.list('qoss', self.eayun_qos_qoss_path, retrieve_all,
+                         **_params)
+
+    @APIParamsCall
+    def show_eayun_qos(self, qos, **_params):
+        """Fetches information of a certain eayun qos."""
+        return self.get(self.eayun_qos_qos_path % (qos), params=_params)
+
+    @APIParamsCall
+    def create_eayun_qos(self, body=None):
+        """Creates a new eayun qos."""
+        return self.post(self.eayun_qos_qoss_path, body=body)
+
+    @APIParamsCall
+    def update_eayun_qos(self, qos, body=None):
+        """Updates an eayun qos."""
+        return self.put(self.eayun_qos_qos_path % (qos), body=body)
+
+    @APIParamsCall
+    def delete_eayun_qos(self, qos):
+        """Deletes the specified eayun qos."""
+        return self.delete(self.eayun_qos_qos_path % (qos))
+
+    @APIParamsCall
+    def list_eayun_qos_queues(self, retrieve_all=True, **_params):
+        """Fetches a list of all eayun qos queues for a tenant."""
+        # Pass filters in "params" argument to do_request
+        return self.list('qos_queues', self.eayun_qos_qos_queues_path,
+                         retrieve_all, **_params)
+
+    @APIParamsCall
+    def show_eayun_qos_queue(self, qos_queue, **_params):
+        """Fetches information of a certain eayun qos queue."""
+        return self.get(self.eayun_qos_qos_queue_path % (qos_queue),
+                        params=_params)
+
+    @APIParamsCall
+    def create_eayun_qos_queue(self, body=None):
+        """Creates a new eayun qos queue."""
+        return self.post(self.eayun_qos_qos_queues_path, body=body)
+
+    @APIParamsCall
+    def update_eayun_qos_queue(self, qos_queue, body=None):
+        """Updates an eayun qos queue."""
+        return self.put(self.eayun_qos_qos_queue_path % (qos_queue), body=body)
+
+    @APIParamsCall
+    def delete_eayun_qos_queue(self, qos_queue):
+        """Deletes the specified eayun qos queue."""
+        return self.delete(self.eayun_qos_qos_queue_path % (qos_queue))
+
+    @APIParamsCall
+    def list_eayun_qos_filters(self, retrieve_all=True, **_params):
+        """Fetches a list of all eayun qos filters for a tenant."""
+        # Pass filters in "params" argument to do_request
+        return self.list('qos_filters', self.eayun_qos_qos_filters_path,
+                         retrieve_all, **_params)
+
+    @APIParamsCall
+    def show_eayun_qos_filter(self, qos_filter, **_params):
+        """Fetches information of a certain eayun qos filter."""
+        return self.get(self.eayun_qos_qos_filter_path % (qos_filter),
+                        params=_params)
+
+    @APIParamsCall
+    def create_eayun_qos_filter(self, body=None):
+        """Creates a new eayun qos filter."""
+        return self.post(self.eayun_qos_qos_filters_path, body=body)
+
+    @APIParamsCall
+    def update_eayun_qos_filter(self, qos_filter, body=None):
+        """Updates an eayun qos filter."""
+        return self.put(self.eayun_qos_qos_filter_path % (qos_filter),
+                        body=body)
+
+    @APIParamsCall
+    def delete_eayun_qos_filter(self, qos_filter):
+        """Deletes the specified eayun qos filter."""
+        return self.delete(self.eayun_qos_qos_filter_path % (qos_filter))
 
     def __init__(self, **kwargs):
         """Initialize a new client for the Neutron v2.0 API."""
