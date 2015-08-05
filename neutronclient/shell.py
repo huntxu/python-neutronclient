@@ -71,6 +71,7 @@ from neutronclient.neutron.v2_0.vpn import vpnservice
 from neutronclient.neutron.v2_0 import eayun_qos
 from neutronclient.openstack.common.gettextutils import _
 from neutronclient.openstack.common import strutils
+from neutronclient.neutron.v2_0 import portmapping
 from neutronclient.version import __version__
 
 
@@ -313,6 +314,11 @@ COMMAND_V2 = {
     'eayun-qos-filter-update': eayun_qos.UpdateQosFilter,
     'eayun-qos-filter-delete': eayun_qos.DeleteQosFilter,
     'eayun-qos-filter-unattach': eayun_qos.UnattachQosFilter,
+    'portmapping-list': portmapping.ListPortmapping,
+    'portmapping-show': portmapping.ShowPortmapping,
+    'portmapping-create': portmapping.CreatePortmapping,
+    'portmapping-update': portmapping.UpdatePortmapping,
+    'portmapping-delete': portmapping.DeletePortmapping,
 }
 
 COMMANDS = {'2.0': COMMAND_V2}
