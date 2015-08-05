@@ -232,6 +232,8 @@ class Client(object):
     eayun_qos_qos_queue_path = '/eayun_qos/qos-queues/%s'
     eayun_qos_qos_filters_path = '/eayun_qos/qos-filters'
     eayun_qos_qos_filter_path = '/eayun_qos/qos-filters/%s'
+    portmappings_path = "/portmappings"
+    portmapping_path = "/portmappings/%s"
 
     # API has no way to report plurals, so we have to hard code them
     EXTED_PLURALS = {'routers': 'router',
@@ -260,6 +262,7 @@ class Client(object):
                      'qoss': 'qos',
                      'qos_queues': 'qos_queue',
                      'qos_filters': 'qos_filter',
+                     'portmappings': 'portmapping',
                      }
     # 8192 Is the default max URI len for eventlet.wsgi.server
     MAX_URI_LEN = 8192
@@ -1283,6 +1286,32 @@ class Client(object):
     def delete_eayun_qos_filter(self, qos_filter):
         """Deletes the specified eayun qos filter."""
         return self.delete(self.eayun_qos_qos_filter_path % (qos_filter))
+
+    @APIParamsCall
+    def create_portmapping(self, body=None):
+        """Create a new portmapping."""
+        return self.post(self.portmappings_path, body=body)
+
+    @APIParamsCall
+    def list_portmappings(self, **_params):
+        """List portmappings."""
+        return self.get(self.portmappings_path, params=_params)
+
+    @APIParamsCall
+    def show_portmapping(self, portmapping, **_params):
+        """Show a portmapping information."""
+        return self.get(self.portmapping_path % (portmapping),
+                        params=_params)
+
+    @APIParamsCall
+    def update_portmapping(self, portmapping, body=None):
+        """Update a portmapping."""
+        return self.put(self.portmapping_path % (portmapping), body=body)
+
+    @APIParamsCall
+    def delete_portmapping(self, portmapping):
+        """Delete the specified portmapping."""
+        return self.delete(self.portmapping_path % (portmapping))
 
     def __init__(self, **kwargs):
         """Initialize a new client for the Neutron v2.0 API."""
