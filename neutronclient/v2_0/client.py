@@ -174,6 +174,8 @@ class Client(object):
     ikepolicy_path = "/vpn/ikepolicies/%s"
     ipsec_site_connections_path = "/vpn/ipsec-site-connections"
     ipsec_site_connection_path = "/vpn/ipsec-site-connections/%s"
+    pptp_credentials_path = "/vpn/pptp-credentials"
+    pptp_credential_path = "/vpn/pptp-credentials/%s"
     vips_path = "/lb/vips"
     vip_path = "/lb/vips/%s"
     pools_path = "/lb/pools"
@@ -246,6 +248,7 @@ class Client(object):
                      'ikepolicies': 'ikepolicy',
                      'ipsec_site_connections': 'ipsec_site_connection',
                      'vpnservices': 'vpnservice',
+                     'pptp_credentials': 'pptp_credential',
                      'vips': 'vip',
                      'pools': 'pool',
                      'members': 'member',
@@ -637,6 +640,36 @@ class Client(object):
     def delete_ipsecpolicy(self, ipsecpolicy):
         """Deletes the specified IPsecPolicy."""
         return self.delete(self.ipsecpolicy_path % (ipsecpolicy))
+
+    @APIParamsCall
+    def list_pptp_credentials(self, retrieve_all=True, **_params):
+        """Fetches a list of all configured PPTP credentials for a tenant."""
+        return self.list('pptp_credentials',
+                         self.pptp_credentials_path,
+                         retrieve_all,
+                         **_params)
+
+    @APIParamsCall
+    def show_pptp_credential(self, pptp_credential, **_params):
+        """Fetches information of a specific PPTP credential."""
+        return self.get(self.pptp_credential_path % (pptp_credential),
+                        params=_params)
+
+    @APIParamsCall
+    def create_pptp_credential(self, body=None):
+        """Creates a new PPTP credential."""
+        return self.post(self.pptp_credentials_path, body=body)
+
+    @APIParamsCall
+    def update_pptp_credential(self, pptp_credential, body=None):
+        """Updates a PPTP credential."""
+        return self.put(self.pptp_credential_path % (pptp_credential),
+                        body=body)
+
+    @APIParamsCall
+    def delete_pptp_credential(self, pptp_credential):
+        """Deletes the specified PPTP credential."""
+        return self.delete(self.pptp_credential_path % (pptp_credential))
 
     @APIParamsCall
     def list_vips(self, retrieve_all=True, **_params):
