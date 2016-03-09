@@ -68,6 +68,7 @@ from neutronclient.neutron.v2_0.vpn import ikepolicy
 from neutronclient.neutron.v2_0.vpn import ipsec_site_connection
 from neutronclient.neutron.v2_0.vpn import ipsecpolicy
 from neutronclient.neutron.v2_0.vpn import vpnservice
+from neutronclient.neutron.v2_0.vpn import eayun_pptp_credential
 from neutronclient.neutron.v2_0 import eayun_qos
 from neutronclient.openstack.common.gettextutils import _
 from neutronclient.openstack.common import strutils
@@ -319,6 +320,11 @@ COMMAND_V2 = {
     'portmapping-create': portmapping.CreatePortmapping,
     'portmapping-update': portmapping.UpdatePortmapping,
     'portmapping-delete': portmapping.DeletePortmapping,
+    'eayun-pptp-credential-list': eayun_pptp_credential.ListPPTPCredential,
+    'eayun-pptp-credential-show': eayun_pptp_credential.ShowPPTPCredential,
+    'eayun-pptp-credential-create': eayun_pptp_credential.CreatePPTPCredential,
+    'eayun-pptp-credential-update': eayun_pptp_credential.UpdatePPTPCredential,
+    'eayun-pptp-credential-delete': eayun_pptp_credential.DeletePPTPCredential,
 }
 
 COMMANDS = {'2.0': COMMAND_V2}
