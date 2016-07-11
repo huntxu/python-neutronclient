@@ -275,3 +275,53 @@ class GetLbaasAgentHostingPool(neutronV20.ListCommand):
         agent = neutron_client.get_lbaas_agent_hosting_pool(**search_opts)
         data = {'agents': [agent['agent']]}
         return data
+
+
+class AddPoolToLbAgent(neutronV20.NeutronCommand):
+    """Add a pool to a lbaas agent."""
+
+    def get_parser(self, prog_name):
+        parser = super(AddPoolToLbAgent, self).get_parser(prog_name)
+        parser.add_argument(
+            'lb_agent',
+            help=_('ID of the Lb agent.'))
+        parser.add_argument(
+            'pool',
+            help=_('Pool to add.'))
+        return parser
+
+    def run(self, parsed_args):
+        self.log.debug('run(%s)' % parsed_args)
+        neutron_client = self.get_client()
+        neutron_client.format = parsed_args.request_format
+        _id = neutronV20.find_resourceid_by_name_or_id(
+            neutron_client, 'pool', parsed_args.pool)
+        neutron_client.add_pool_to_lb_agent(parsed_args.lb_agent,
+                                            {'pool_id': _id})
+        print(_('Added pool %s to Lb agent') % parsed_args.pool,
+              file=self.app.stdout)
+
+
+class RemovePoolFromLbAgent(neutronV20.NeutronCommand):
+    """Remove a pool from a lbaas agent."""
+
+    def get_parser(self, prog_name):
+        parser = super(RemovePoolFromLbAgent, self).get_parser(prog_name)
+        parser.add_argument(
+            'lb_agent',
+            help=_('ID of the Lb agent.'))
+        parser.add_argument(
+            'pool',
+            help=_('Pool to remove.'))
+        return parser
+
+    def run(self, parsed_args):
+        self.log.debug('run(%s)' % parsed_args)
+        neutron_client = self.get_client()
+        neutron_client.format = parsed_args.request_format
+        _id = neutronV20.find_resourceid_by_name_or_id(
+            neutron_client, 'pool', parsed_args.pool)
+        neutron_client.remove_pool_from_lb_agent(
+            parsed_args.lb_agent, _id)
+        print(_('Removed pool %s from Lb agent') % parsed_args.pool,
+              file=self.app.stdout)

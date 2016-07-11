@@ -799,6 +799,18 @@ class Client(object):
         return self.delete(path)
 
     @APIParamsCall
+    def add_pool_to_lb_agent(self, lb_agent, body):
+        """Add a pool to Lbaas agent."""
+        return self.post((self.agent_path + self.LOADBALANCER_POOLS) %
+                         lb_agent, body=body)
+
+    @APIParamsCall
+    def remove_pool_from_lb_agent(self, lb_agent, pool_id):
+        """Remove a pool from Lbaas agent."""
+        return self.delete((self.agent_path + self.LOADBALANCER_POOLS +
+                            "/%s") % (lb_agent, pool_id))
+
+    @APIParamsCall
     def create_qos_queue(self, body=None):
         """Creates a new queue."""
         return self.post(self.qos_queues_path, body=body)
