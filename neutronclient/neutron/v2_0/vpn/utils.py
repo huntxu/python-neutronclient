@@ -23,8 +23,7 @@
 from neutronclient.common import exceptions
 from neutronclient.openstack.common.gettextutils import _
 
-dpd_supported_actions = ['hold', 'clear', 'restart',
-                         'restart-by-peer', 'disabled']
+dpd_supported_actions = ['hold', 'clear', 'restart']
 dpd_supported_keys = ['action', 'interval', 'timeout']
 
 lifetime_keys = ['units', 'value']
@@ -106,7 +105,7 @@ def lifetime_help(policy):
 
 def dpd_help(policy):
     dpd = _(" %s Dead Peer Detection attributes."
-            " 'action'-hold,clear,disabled,restart,restart-by-peer."
+            " 'action'-hold,clear,restart."
             " 'interval' and 'timeout' are non negative integers. "
             " 'interval' should be less than 'timeout' value. "
             " 'action', default:hold 'interval', default:30, "
