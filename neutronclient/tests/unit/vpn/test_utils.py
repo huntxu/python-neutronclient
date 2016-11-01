@@ -36,18 +36,8 @@ class TestVPNUtils(testtools.TestCase):
         input_str = utils.str2dict("action=restart,interval=30,timeout=120")
         self.assertIsNone(vpn_utils.validate_dpd_dict(input_str))
 
-    def test_validate_dpd_dictionary_action_restart_by_peer(self):
-        input_str = utils.str2dict(
-            "action=restart-by-peer,interval=30,timeout=120"
-        )
-        self.assertIsNone(vpn_utils.validate_dpd_dict(input_str))
-
     def test_validate_dpd_dictionary_action_clear(self):
         input_str = utils.str2dict('action=clear,interval=30,timeout=120')
-        self.assertIsNone(vpn_utils.validate_dpd_dict(input_str))
-
-    def test_validate_dpd_dictionary_action_disabled(self):
-        input_str = utils.str2dict('action=disabled,interval=30,timeout=120')
         self.assertIsNone(vpn_utils.validate_dpd_dict(input_str))
 
     def test_validate_lifetime_dictionary_invalid_unit_key(self):
