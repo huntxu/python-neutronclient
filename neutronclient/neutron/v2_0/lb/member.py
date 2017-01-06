@@ -25,7 +25,8 @@ class ListMember(neutronV20.ListCommand):
 
     resource = 'member'
     list_columns = [
-        'id', 'address', 'protocol_port', 'weight', 'admin_state_up', 'status'
+        'id', 'address', 'protocol_port', 'weight', 'priority',
+        'admin_state_up', 'status'
     ]
     pagination_support = True
     sorting_support = True
@@ -54,6 +55,10 @@ class CreateMember(neutronV20.CreateCommand):
             '--weight',
             help=_('Weight of pool member in the pool (default:1, [0..256]).'))
         parser.add_argument(
+            '--priority',
+            help=_('Priority of pool member in the active/backup pool'
+                   '([0..255]).'))
+        parser.add_argument(
             '--address',
             required=True,
             help=_('IP address of the pool member on the pool network.'))
@@ -75,7 +80,8 @@ class CreateMember(neutronV20.CreateCommand):
         neutronV20.update_dict(
             parsed_args,
             body[self.resource],
-            ['address', 'protocol_port', 'weight', 'tenant_id']
+            ['address', 'protocol_port', 'weight',
+             'tenant_id', 'priority']
         )
         return body
 
