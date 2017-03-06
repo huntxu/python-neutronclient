@@ -236,6 +236,8 @@ class Client(object):
     eayun_qos_qos_filter_path = '/eayun_qos/qos-filters/%s'
     portmappings_path = "/portmappings"
     portmapping_path = "/portmappings/%s"
+    es_metering_labels_path = "/metering/es-metering-labels"
+    es_metering_label_path = "/metering/es-metering-labels/%s"
 
     # API has no way to report plurals, so we have to hard code them
     EXTED_PLURALS = {'routers': 'router',
@@ -266,6 +268,7 @@ class Client(object):
                      'qos_queues': 'qos_queue',
                      'qos_filters': 'qos_filter',
                      'portmappings': 'portmapping',
+                     'es_metering_labels': 'es_metering_label',
                      }
     # 8192 Is the default max URI len for eventlet.wsgi.server
     MAX_URI_LEN = 8192
@@ -1357,6 +1360,32 @@ class Client(object):
     def delete_portmapping(self, portmapping):
         """Delete the specified portmapping."""
         return self.delete(self.portmapping_path % (portmapping))
+
+    @APIParamsCall
+    def list_es_metering_labels(self, retrieve_all=True, **_params):
+        """Fetches a list of all EayunStack metering labels for a tenant."""
+        return self.list('es_metering_labels', self.es_metering_labels_path,
+                         retrieve_all, **_params)
+
+    @APIParamsCall
+    def show_es_metering_label(self, label, **_params):
+        """Fetch information of a certain EayunStack metering label."""
+        return self.get(self.es_metering_label_path % (label), params=_params)
+
+    @APIParamsCall
+    def create_es_metering_label(self, body=None):
+        """Create a new EayunStack metering label."""
+        return self.post(self.es_metering_labels_path, body=body)
+
+    @APIParamsCall
+    def update_es_metering_label(self, label, body=None):
+        """Update a given EayunStack metering label."""
+        return self.put(self.es_metering_label_path % (label), body=body)
+
+    @APIParamsCall
+    def delete_es_metering_label(self, label):
+        """Delete a given EayunStack metering label."""
+        return self.delete(self.es_metering_label_path % (label))
 
     def __init__(self, **kwargs):
         """Initialize a new client for the Neutron v2.0 API."""

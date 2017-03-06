@@ -327,6 +327,11 @@ COMMAND_V2 = {
     'eayun-pptp-credential-create': eayun_pptp_credential.CreatePPTPCredential,
     'eayun-pptp-credential-update': eayun_pptp_credential.UpdatePPTPCredential,
     'eayun-pptp-credential-delete': eayun_pptp_credential.DeletePPTPCredential,
+    'es-meter-label-list': metering.ListEsMeteringLabel,
+    'es-meter-label-show': metering.ShowEsMeteringLabel,
+    'es-meter-label-create': metering.CreateEsMeteringLabel,
+    'es-meter-label-update': metering.UpdateEsMeteringLabel,
+    'es-meter-label-delete': metering.DeleteEsMeteringLabel,
 }
 
 COMMANDS = {'2.0': COMMAND_V2}
