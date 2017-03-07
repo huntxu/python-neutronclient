@@ -50,6 +50,8 @@ from neutronclient.neutron.v2_0.lb import healthmonitor as lb_healthmonitor
 from neutronclient.neutron.v2_0.lb import member as lb_member
 from neutronclient.neutron.v2_0.lb import pool as lb_pool
 from neutronclient.neutron.v2_0.lb import vip as lb_vip
+from neutronclient.neutron.v2_0.lb import l7policy as lb_l7policy
+from neutronclient.neutron.v2_0.lb import l7rule as lb_l7rule
 from neutronclient.neutron.v2_0 import metering
 from neutronclient.neutron.v2_0.nec import packetfilter
 from neutronclient.neutron.v2_0 import netpartition
@@ -190,6 +192,20 @@ COMMAND_V2 = {
     'lb-healthmonitor-associate': lb_healthmonitor.AssociateHealthMonitor,
     'lb-healthmonitor-disassociate': (
         lb_healthmonitor.DisassociateHealthMonitor
+    ),
+    'lb-l7policy-list': lb_l7policy.ListL7policy,
+    'lb-l7policy-show': lb_l7policy.ShowL7policy,
+    'lb-l7policy-create': lb_l7policy.CreateL7policy,
+    'lb-l7policy-update': lb_l7policy.UpdateL7policy,
+    'lb-l7policy-delete': lb_l7policy.DeleteL7policy,
+    'lb-l7rule-list': lb_l7rule.ListL7rule,
+    'lb-l7rule-show': lb_l7rule.ShowL7rule,
+    'lb-l7rule-create': lb_l7rule.CreateL7rule,
+    'lb-l7rule-update': lb_l7rule.UpdateL7rule,
+    'lb-l7rule-delete': lb_l7rule.DeleteL7rule,
+    'lb-l7rule-associate': lb_l7rule.AssociateL7rule,
+    'lb-l7rule-disassociate': (
+        lb_l7rule.DisassociateL7rule
     ),
     'queue-create': qos_queue.CreateQoSQueue,
     'queue-delete': qos_queue.DeleteQoSQueue,

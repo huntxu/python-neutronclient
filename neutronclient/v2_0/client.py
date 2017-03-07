@@ -188,6 +188,13 @@ class Client(object):
     associate_pool_health_monitors_path = "/lb/pools/%s/health_monitors"
     disassociate_pool_health_monitors_path = (
         "/lb/pools/%(pool)s/health_monitors/%(health_monitor)s")
+    l7policy_path = "/lb/l7policies/%s"
+    l7policies_path = "/lb/l7policies"
+    l7rule_path = "/lb/l7rules/%s"
+    l7rules_path = "/lb/l7rules"
+    associate_l7policy_l7rules_path = "/lb/l7policies/%s/l7rules"
+    disassociate_l7policy_l7rules_path = (
+        "/lb/l7policies/%(l7policy)s/l7rules/%(l7rule)s")
     qos_queues_path = "/qos-queues"
     qos_queue_path = "/qos-queues/%s"
     agents_path = "/agents"
@@ -255,6 +262,8 @@ class Client(object):
                      'pools': 'pool',
                      'members': 'member',
                      'health_monitors': 'health_monitor',
+                     'l7policies': 'l7policy',
+                     'l7rules': 'l7rule',
                      'quotas': 'quota',
                      'service_providers': 'service_provider',
                      'firewall_rules': 'firewall_rule',
@@ -799,6 +808,73 @@ class Client(object):
         """Disassociate specified load balancer health monitor and pool."""
         path = (self.disassociate_pool_health_monitors_path %
                 {'pool': pool, 'health_monitor': health_monitor})
+        return self.delete(path)
+
+    @APIParamsCall
+    def list_l7policies(self, retrieve_all=True, **_params):
+        """Fetches a list of all load balancer l7policies for a tenant."""
+        # Pass filters in "params" argument to do_request
+        return self.list('l7policies', self.l7policies_path, retrieve_all,
+                         **_params)
+
+    @APIParamsCall
+    def show_l7policy(self, l7policy, **_params):
+        """Fetches information of a certain load balancer l7policy."""
+        return self.get(self.l7policy_path % (l7policy), params=_params)
+
+    @APIParamsCall
+    def create_l7policy(self, body=None):
+        """Creates a new load balancer l7policy."""
+        return self.post(self.l7policies_path, body=body)
+
+    @APIParamsCall
+    def update_l7policy(self, l7policy, body=None):
+        """Updates a load balancer l7policy."""
+        return self.put(self.l7policy_path % (l7policy), body=body)
+
+    @APIParamsCall
+    def delete_l7policy(self, l7policy):
+        """Deletes the specified load balancer l7policy."""
+        return self.delete(self.l7policy_path % (member))
+
+    @APIParamsCall
+    def list_l7rules(self, retrieve_all=True, **_params):
+        """Fetches a list of all load balancer l7rules for a tenant."""
+        # Pass filters in "params" argument to do_request
+        return self.list('l7rules', self.l7policies_path, retrieve_all,
+                         **_params)
+
+    @APIParamsCall
+    def show_l7rule(self, l7rule, **_params):
+        """Fetches information of a certain load balancer l7rule."""
+        return self.get(self.l7rule_path % (l7rule), params=_params)
+
+    @APIParamsCall
+    def create_l7rule(self, body=None):
+        """Creates a new load balancer l7rule."""
+        return self.post(self.l7rules_path, body=body)
+
+    @APIParamsCall
+    def update_l7rule(self, l7rule, body=None):
+        """Updates a load balancer l7rule."""
+        return self.put(self.l7rule_path % (l7rule), body=body)
+
+    @APIParamsCall
+    def delete_l7rule(self, l7rule):
+        """Deletes the specified load balancer l7rule."""
+        return self.delete(self.l7rule_path % (l7rule))
+
+    @APIParamsCall
+    def associate_l7rule(self, l7policy, body):
+        """Associate  specified load balancer l7rule and l7policy."""
+        return self.post(self.associate_l7policy_l7rules_path % (l7policy),
+                         body=body)
+
+    @APIParamsCall
+    def disassociate_l7rule(self, l7policy, l7rule):
+        """Disassociate specified load balancer l7rule and l7policy."""
+        path = (self.disassociate_l7policy_l7rules_path %
+                {'l7policy': l7policy, 'l7rule': l7rule})
         return self.delete(path)
 
     @APIParamsCall
