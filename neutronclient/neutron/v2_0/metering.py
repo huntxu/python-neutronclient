@@ -133,3 +133,97 @@ class DeleteMeteringLabelRule(neutronv20.DeleteCommand):
     """Delete a given metering label."""
 
     resource = 'metering_label_rule'
+
+
+class ListEsMeteringLabel(neutronv20.ListCommand):
+    """List EayunStack metering labels that belong to a given tenant."""
+
+    resource = "es_metering_label"
+    list_columns = ['id', 'name', 'description', 'router_id',
+                    'direction', 'internal_ip', 'tcp_port']
+    pagination_support = True
+    sorting_support = True
+
+
+class ShowEsMeteringLabel(neutronv20.ShowCommand):
+    """Show information of a given EayunStack metering label."""
+
+    resource = "es_metering_label"
+    allow_names = True
+
+
+class CreateEsMeteringLabel(neutronv20.CreateCommand):
+    """Create an EayunStack metering label for a given tenant."""
+
+    resource = "es_metering_label"
+
+    def add_known_arguments(self, parser):
+        parser.add_argument(
+            'router_id', metavar='ROUTER_ID',
+            help=_('Router in which the label is to be created.'))
+        parser.add_argument(
+            'direction', metavar='DIRECTION',
+            choices=['ingress', 'egress'],
+            help=_('Direction of traffic, default: ingress.'))
+        parser.add_argument(
+            '--name',
+            help=_('Name of this EayunStack metering label.'))
+        parser.add_argument(
+            '--description',
+            help=_('Description of this EayunStack metering label.'))
+        parser.add_argument(
+            '--internal_ip',
+            help=_('Internal CIDR to match on.'))
+        parser.add_argument(
+            '--tcp_port',
+            help=_('TCP port to match on.'))
+
+    def args2body(self, parsed_args):
+        body = {
+            'es_metering_label': {
+                'router_id': parsed_args.router_id,
+                'direction': parsed_args.direction,
+            }
+        }
+        if parsed_args.name:
+            body['es_metering_label'].update({'name': parsed_args.name})
+        if parsed_args.description:
+            body['es_metering_label'].update(
+                {'description': parsed_args.description})
+        if parsed_args.internal_ip:
+            body['es_metering_label'].update(
+                {'internal_ip': parsed_args.internal_ip})
+        if parsed_args.tcp_port:
+            body['es_metering_label'].update(
+                {'tcp_port': parsed_args.tcp_port})
+        return body
+
+
+class UpdateEsMeteringLabel(neutronv20.UpdateCommand):
+    """Update a given EayunStack metering label."""
+
+    resource = "es_metering_label"
+
+    def add_known_arguments(self, parser):
+        parser.add_argument(
+            '--name',
+            help=_('Name of this EayunStack metering label.'))
+        parser.add_argument(
+            '--description',
+            help=_('Description of this EayunStack metering label.'))
+
+    def args2body(self, parsed_args):
+        body = {'es_metering_label': {}}
+        if parsed_args.name:
+            body['es_metering_label'].update({'name': parsed_args.name})
+        if parsed_args.description:
+            body['es_metering_label'].update(
+                {'description': parsed_args.description})
+        return body
+
+
+class DeleteEsMeteringLabel(neutronv20.DeleteCommand):
+    """Delete a given EayunStack metering label."""
+
+    resource = "es_metering_label"
+    allow_names = True
