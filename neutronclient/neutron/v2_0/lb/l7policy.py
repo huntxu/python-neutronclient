@@ -48,17 +48,12 @@ class CreateL7policy(neutronV20.CreateCommand):
             dest='admin_state', action='store_false',
             help=_('Set admin state up to false.'))
         parser.add_argument(
-            '--description',
-            help=_('Description of the l7policy.'))
-        parser.add_argument(
             '--priority',
             required=True,
-            help=_('The prority(valid in [0,255]) for l7policy'))
-        parser.add_argument(
-            '--name',
-            help=_('The name of the l7policy.'))
+            help=_('The priority(valid in [0,255]) for l7policy'))
         parser.add_argument(
             '--pool-id', metavar='POOL',
+            default=None,
             help=_('The l7policy of pool that belong.'))
         parser.add_argument(
             '--action',
@@ -73,8 +68,10 @@ class CreateL7policy(neutronV20.CreateCommand):
             help=_('The value of the l7policy action values.'))
 
     def args2body(self, parsed_args):
-        _pool_id = neutronV20.find_resourceid_by_name_or_id(
-            self.get_client(), 'pool', parsed_args.pool_id)
+        _pool_id = None
+        if parsed_args.pool_id:
+            _pool_id = neutronV20.find_resourceid_by_name_or_id(
+                self.get_client(), 'pool', parsed_args.pool_id)
         body = {
             self.resource: {
                 'admin_state_up': parsed_args.admin_state,
@@ -82,8 +79,8 @@ class CreateL7policy(neutronV20.CreateCommand):
             },
         }
         neutronV20.update_dict(parsed_args, body[self.resource],
-                               ['description', 'prority', 'name',
-                                'action', 'tenant_id', 'key', 'value'])
+                               ['priority', 'action', 'tenant_id',
+                                'key', 'value'])
         return body
 
 

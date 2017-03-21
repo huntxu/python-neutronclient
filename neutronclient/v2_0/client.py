@@ -841,7 +841,7 @@ class Client(object):
     def list_l7rules(self, retrieve_all=True, **_params):
         """Fetches a list of all load balancer l7rules for a tenant."""
         # Pass filters in "params" argument to do_request
-        return self.list('l7rules', self.l7policies_path, retrieve_all,
+        return self.list('l7rules', self.l7rules_path, retrieve_all,
                          **_params)
 
     @APIParamsCall
