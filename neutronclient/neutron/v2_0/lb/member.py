@@ -67,6 +67,14 @@ class CreateMember(neutronV20.CreateCommand):
             required=True,
             help=_('Port on which the pool member listens for requests or '
                    'connections.'))
+        parser.add_argument(
+            '--monitor_address',
+            help=_('IP address of the pool member for health check '
+                   'connection.'))
+        parser.add_argument(
+            '--monitor_port',
+            help=_('Port on which the pool member for health check '
+                   'connection'))
 
     def args2body(self, parsed_args):
         _pool_id = neutronV20.find_resourceid_by_name_or_id(
@@ -81,7 +89,8 @@ class CreateMember(neutronV20.CreateCommand):
             parsed_args,
             body[self.resource],
             ['address', 'protocol_port', 'weight',
-             'tenant_id', 'priority']
+             'tenant_id', 'priority', 'monitor_address',
+             'monitor_port']
         )
         return body
 
