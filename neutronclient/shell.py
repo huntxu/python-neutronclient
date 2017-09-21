@@ -72,9 +72,9 @@ from neutronclient.neutron.v2_0.vpn import ipsecpolicy
 from neutronclient.neutron.v2_0.vpn import vpnservice
 from neutronclient.neutron.v2_0.vpn import eayun_pptp_credential
 from neutronclient.neutron.v2_0 import eayun_qos
+from neutronclient.neutron.v2_0 import portmapping
 from neutronclient.openstack.common.gettextutils import _
 from neutronclient.openstack.common import strutils
-from neutronclient.neutron.v2_0 import portmapping
 from neutronclient.version import __version__
 
 
