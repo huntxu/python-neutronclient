@@ -245,6 +245,12 @@ class Client(object):
     portmapping_path = "/portmappings/%s"
     es_metering_labels_path = "/metering/es-metering-labels"
     es_metering_label_path = "/metering/es-metering-labels/%s"
+    es_acls_path = "/fw/es_acls"
+    es_acl_path = "/fw/es_acls/%s"
+    es_acl_bind_subnets_path = "/fw/es_acls/%s/bind_subnets"
+    es_acl_unbind_subnets_path = "/fw/es_acls/%s/unbind_subnets"
+    es_acl_rules_path = "/fw/es_acl_rules"
+    es_acl_rule_path = "/fw/es_acl_rules/%s"
 
     # API has no way to report plurals, so we have to hard code them
     EXTED_PLURALS = {'routers': 'router',
@@ -278,6 +284,8 @@ class Client(object):
                      'qos_filters': 'qos_filter',
                      'portmappings': 'portmapping',
                      'es_metering_labels': 'es_metering_label',
+                     'es_acls': 'es_acl',
+                     'es_acl_rules': 'es_acl_rule',
                      }
     # 8192 Is the default max URI len for eventlet.wsgi.server
     MAX_URI_LEN = 8192
@@ -1462,6 +1470,68 @@ class Client(object):
     def delete_es_metering_label(self, label):
         """Delete a given EayunStack metering label."""
         return self.delete(self.es_metering_label_path % (label))
+
+    @APIParamsCall
+    def list_es_acls(self, retrieve_all=True, **_params):
+        """Fetches a list of all EayunStack ACLs for a tenant."""
+        return self.list('es_acls', self.es_acls_path,
+                         retrieve_all, **_params)
+
+    @APIParamsCall
+    def show_es_acl(self, acl, **_params):
+        """Fetch information of a certain EayunStack ACL."""
+        return self.get(self.es_acl_path % (acl), params=_params)
+
+    @APIParamsCall
+    def create_es_acl(self, body=None):
+        """Create a new EayunStack ACL."""
+        return self.post(self.es_acls_path, body=body)
+
+    @APIParamsCall
+    def update_es_acl(self, acl, body=None):
+        """Update a given EayunStack ACL."""
+        return self.put(self.es_acl_path % (acl), body=body)
+
+    @APIParamsCall
+    def delete_es_acl(self, acl):
+        """Delete a given EayunStack ACL."""
+        return self.delete(self.es_acl_path % (acl))
+
+    @APIParamsCall
+    def es_acl_bind_subnets(self, acl, body):
+        """Bind a given EayunStack ACL to subnets."""
+        return self.put(self.es_acl_bind_subnets_path % (acl), body=body)
+
+    @APIParamsCall
+    def es_acl_unbind_subnets(self, acl, body):
+        """Unbind a given EayunStack ACL from subnets."""
+        return self.put(self.es_acl_unbind_subnets_path % (acl), body=body)
+
+    @APIParamsCall
+    def list_es_acl_rules(self, retrieve_all=True, **_params):
+        """Fetches a list of all EayunStack ACL rules for a tenant."""
+        return self.list('es_acl_rules', self.es_acl_rules_path,
+                         retrieve_all, **_params)
+
+    @APIParamsCall
+    def show_es_acl_rule(self, acl_rule, **_params):
+        """Fetch information of a certain EayunStack ACL rule."""
+        return self.get(self.es_acl_rule_path % (acl_rule), params=_params)
+
+    @APIParamsCall
+    def create_es_acl_rule(self, body=None):
+        """Create a new EayunStack ACL rule."""
+        return self.post(self.es_acl_rules_path, body=body)
+
+    @APIParamsCall
+    def update_es_acl_rule(self, acl_rule, body=None):
+        """Update a given EayunStack ACL rule."""
+        return self.put(self.es_acl_rule_path % (acl_rule), body=body)
+
+    @APIParamsCall
+    def delete_es_acl_rule(self, acl_rule):
+        """Delete a given EayunStack ACL rule."""
+        return self.delete(self.es_acl_rule_path % (acl_rule))
 
     def __init__(self, **kwargs):
         """Initialize a new client for the Neutron v2.0 API."""

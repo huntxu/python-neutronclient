@@ -46,6 +46,7 @@ from neutronclient.neutron.v2_0 import floatingip
 from neutronclient.neutron.v2_0.fw import firewall
 from neutronclient.neutron.v2_0.fw import firewallpolicy
 from neutronclient.neutron.v2_0.fw import firewallrule
+from neutronclient.neutron.v2_0.fw import es_acl
 from neutronclient.neutron.v2_0.lb import healthmonitor as lb_healthmonitor
 from neutronclient.neutron.v2_0.lb import member as lb_member
 from neutronclient.neutron.v2_0.lb import pool as lb_pool
@@ -348,6 +349,18 @@ COMMAND_V2 = {
     'es-meter-label-create': metering.CreateEsMeteringLabel,
     'es-meter-label-update': metering.UpdateEsMeteringLabel,
     'es-meter-label-delete': metering.DeleteEsMeteringLabel,
+    'es-acl-list': es_acl.ListEsAcl,
+    'es-acl-show': es_acl.ShowEsAcl,
+    'es-acl-create': es_acl.CreateEsAcl,
+    'es-acl-update': es_acl.UpdateEsAcl,
+    'es-acl-delete': es_acl.DeleteEsAcl,
+    'es-acl-bind-subnets': es_acl.EsAclBindSubnets,
+    'es-acl-unbind-subnets': es_acl.EsAclUnbindSubnets,
+    'es-acl-rule-list': es_acl.ListEsAclRule,
+    'es-acl-rule-show': es_acl.ShowEsAclRule,
+    'es-acl-rule-create': es_acl.CreateEsAclRule,
+    'es-acl-rule-update': es_acl.UpdateEsAclRule,
+    'es-acl-rule-delete': es_acl.DeleteEsAclRule,
 }
 
 COMMANDS = {'2.0': COMMAND_V2}
